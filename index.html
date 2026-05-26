@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+ 
+    h1 { 
+        font-family: 'Playfair Display', serif; 
+    }
+ 
+    /* === FORM === */
+ 
+    .input-field {
+      background: #fffdf6;
+      border: 1.5px solid #d6cdb8;
+      border-radius: 4px;
+      padding: 0.65rem 0.9rem;
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .input-field:focus {
+      border-color: #2d2d4e;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+    }
+    .input-field.error {
+      border-color: #2d2d4e;
+      box-shadow: 0 0 0 3px rgba(192,57,43,0.12);
+    }
+ 
+    label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6047;
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+ 
+ 
+    .submit-btn {
+      background: #2d2d4e;
+      color: #cfcfcf;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .submit-btn:hover { 
+        background: #2d2d4edf; transform: translateY(-1px);
+    }
+    .submit-btn:active {
+        transform: translateY(0);
+    }
+
+    /* -------------------CARD----------------- */
+    #card-section {
+      display: none;
+    }
+ 
+    .card {
+      background: #fffdf6;
+      border-radius: 6px;
+      box-shadow: 0 8px 40px rgba(26,26,46,0.13), 0 2px 8px rgba(201,168,76,0.1);
+      overflow: hidden;
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+    }
+ 
+    .card-header {
+      background: #2d2d4e1f;
+      border-bottom: 1px solid #a7a7b8;
+      padding: 2rem 2rem 1.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+ 
+    .avatar {
+      width: 76px; 
+      height: 76px;
+      border-radius: 50%;
+      background: #2d2d4ede;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; 
+      font-weight: 900;
+      color: #cfcfcf;
+      border: 3px solid rgba(255,255,255,0.15);
+      margin-bottom: 0.85rem;
+      position: relative; 
+      z-index: 1;
+    }
+ 
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem; 
+      font-weight: 900;
+      color: #1c1c2e;
+      line-height: 1.1;
+      position: relative; 
+      z-index: 1;
+    }
+ 
+    .card-grade-badge {
+      display: inline-block;
+      color: #1c1c2e;
+      font-size: 0.7rem; 
+      font-weight: 500;
+      letter-spacing: 0.1em; 
+      text-transform: uppercase;
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+      margin-top: 0.4rem;
+      position: relative; 
+      z-index: 1;
+    }
+ 
+    .card-body {
+      padding: 1.5rem 2rem 2rem;
+    }
+ 
+    .card-divider {
+      height: 1px;
+      margin-bottom: 1.25rem;
+    }
+ 
+    .info-row {
+      display: flex; 
+      align-items: flex-start; 
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .info-icon {
+      width: 32px; 
+      height: 32px;
+      background: #f0e9d6;
+      border-radius: 4px;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      font-size: 0.95rem;
+    }
+    .info-label {
+      font-size: 0.7rem; 
+      font-weight: 500;
+      letter-spacing: 0.08em; 
+      text-transform: uppercase;
+      color: #9b8e72; 
+      margin-bottom: 0.1rem;
+    }
+
+    .info-value {
+      font-size: 0.95rem; color: #1c1c2e; font-weight: 400;
+    }
+ 
+    .edit-btn {
+      background: transparent;
+      border: 1.5px solid #d6cdb8;
+      color: #6b6047;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem; 
+      font-weight: 500;
+      letter-spacing: 0.06em; 
+      text-transform: uppercase;
+      padding: 0.5rem 1.4rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      margin-top: 0.25rem;
+    }
+    .edit-btn:hover {
+      border-color: #6b6047;
+      color: #6b6047;
+      background: #c2c2c23e;
+    }
+  </style>
+</head>
+<body>
+    <div class="container flex items-center place-content-center m-auto mt-6">
+
+        <!-- ----------------FORM--------------- -->
+        <div id="form-section" class="w-full max-w-lg">
+            <div class="mb-6 text-center">
+                <p class="text-xs font-semibold uppercase text-yellow-700 mb-1">Academic Profile</p>
+                <h1 class="text-4xl font-thin text-gray-700">Create Your Card</h1>
+                <p class="text-sm mt-2 text-[#7a7060]">Fill in your details to generate your student profile.</p>
+            </div>
+        
+            <div class="bg-white rounded-md shadow-md p-8 border-1 border-[#e4ddd0]">
+                <div class="space-y-5">
+                    <div>
+                        <label for="name">Full Name</label>
+                        <input class="input-field" id="name" type="text" placeholder="Enter Full Name"/>
+                    </div>
+                    <div>
+                        <label for="grade">Grade / Year</label>
+                        <input class="input-field" id="grade" type="text" placeholder="Enter your grade"/>
+                    </div>
+                    <div>
+                        <label for="email">Email Address</label>
+                        <input class="input-field" id="email" type="email" placeholder="Enter Email"/>
+                    </div>
+                    <div>
+                        <label for="school">School / Institution</label>
+                        <input class="input-field" id="school" type="text" placeholder="Enter school name"/>
+                    </div>
+            
+                    <button class="submit-btn" onclick="display()">Submit</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- -----------Card---------------- -->
+        <div id="card-section" class="flex flex-col items-center gap-4 w-full max-w-lg">
+
+            <div class="card">
+                <div class="card-header flex flex-col items-center">
+                    <div class="avatar" id="card-avatar"></div>
+                    <div class="card-name" id="card-name"></div>
+                    <div class="card-grade-badge" id="card-grade"></div>
+                </div>
+                <div class="card-body">
+                    <div class="card-divider"></div>
+                    <div class="info-row">
+                        <div class="info-icon">✉️</div>
+                        <div>
+                            <div class="info-label">Email</div>
+                            <div class="info-value" id="card-email"></div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon">🏫</div>
+                        <div>
+                            <div class="info-label">Institution</div>
+                            <div class="info-value" id="card-school"></div>
+                        </div>
+                    </div>
+                    <button class="edit-btn" onclick="editCard()">← Edit Details</button>
+                </div>
+            </div>
+
+            <p class="text-xs mt-1 text-[#a09880]">Your student profile card</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
